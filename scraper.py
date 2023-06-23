@@ -8,4 +8,5 @@ def extract_text(url):
     article_text = ''
     for element in text:
         article_text += '\n' + ''.join(element.findAll(string = True))
+    
     return article_text

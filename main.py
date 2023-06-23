@@ -1,5 +1,6 @@
 from flask import Flask, request
 from classifier import classifier
+from mongo import new_article, get_articles
 
 app = Flask(__name__, static_folder='static/dist', static_url_path='')
 
@@ -9,9 +10,16 @@ def hello():
 
 @app.route('/api/url', methods=['POST'])
 def classify():
-    data = request.json()
-    return classifier(data.url)
+    data = request.json
+    url = data["url"]
+    categories = classifier(url)
+    new_article(url, categories)
+    
+    return categories
 
+@app.route('/api/history')
+def history():
+    return get_articles()
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')

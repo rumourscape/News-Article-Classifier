@@ -26,6 +26,9 @@ def classifier(url):
     # Map to classes
     for i in range(len(predictions)):
         if predictions[i]:
-            categories.append(class_mapping[i].replace("_"," "))
+            category = class_mapping[i].replace("_"," ")
+            if category == "news & social concern":
+                category = "politics or social concern"
+            categories.append(category)
     
     return categories
